@@ -3,6 +3,7 @@ import { useAccount, useConnect } from "wagmi"
 import { Button } from "./ui/button"
 import { injected } from "wagmi/connectors"
 import { PlusIcon } from "lucide-react"
+import Blockies from 'react-blockies';
 
 function Nav() {
     const { address } = useAccount()
@@ -20,7 +21,19 @@ function Nav() {
         address ?<nav>
         <ul className="flex items-center">
              <li><Link className="text-sm font-semibold px-4" to={'records/'} >Records</Link></li>
-             <Button ><Link className="text-sm font-semibold  flex gap-2 items-center" to={'records/create'} > Add Record <PlusIcon /></Link></Button>
+             <Link  to={'records/create'} >  <Button className="text-sm font-semibold  flex gap-2 items-center">Add Record <PlusIcon /></Button></Link>
+
+             <div className="bg-red-200 rounded-full overflow-hidden ml-4">
+             <Blockies
+            seed={address} 
+            size={12}
+            scale={3} 
+            bgColor= '#e0f7fa' // Background color
+            color='#0277bd' // Primary color
+            spotColor='#4fc3f7' // Secondary color
+            className="identicon"
+          />
+             </div>
         </ul>
     </nav>
     : <Button  onClick={() => connect({ connector: injected() })}>connect</Button>
