@@ -1,9 +1,9 @@
+import { Button } from "@/components/ui/button"
+import { useCreateRecord, useRecords } from "@/hooks/use-contract"
 import { useAccount, useConnect, useDisconnect } from "wagmi"
-import { Button } from "./components/ui/button"
-import { useCreateRecord, useRecords } from "./hooks/use-contract"
 
 
-function App() {
+function Home() {
 
   const { address } = useAccount()
   const { connectors, connect } = useConnect()
@@ -51,4 +51,4 @@ function App() {
   )
 }
 
-export default App
+export default Home
