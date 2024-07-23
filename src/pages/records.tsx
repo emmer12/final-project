@@ -35,7 +35,7 @@ export function Records() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {records.map((record,i) => (
+        {records.reverse().map((record,i) => (
           <TableRow key={record.recordId}>
             <TableCell className="font-medium">{i + 1}</TableCell>
             <TableCell className="font-medium">{record.patientName}</TableCell>
@@ -43,7 +43,7 @@ export function Records() {
             <TableCell>{record.patientGender}</TableCell>
             <TableCell>{record.patientDOB}</TableCell>
             <TableCell className="text-right">
-              <Link className="flex justify-end" to={"/records/edit/asdfd"}>
+              <Link className="flex justify-end" to={`/records/edit/${record.recordId}`}>
                 <EditIcon />
               </Link>
             </TableCell>

@@ -1,4 +1,5 @@
 import Nav from '@/components/Nav'
+import { Toaster } from '@/components/ui/toaster'
 import { Outlet } from 'react-router'
 
 function Layout() {
@@ -7,6 +8,7 @@ function Layout() {
         <Nav />
        <div className="container">
        <Outlet />
+       <Toaster />
        </div>
     </div>
   )

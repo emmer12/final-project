@@ -4,6 +4,9 @@ import { CONTRACT_ADDRESS } from "@/constants";
 import { useEffect, useState } from "react";
 import { readContract } from "wagmi/actions";
 import { config } from "@/lib/config";
+import { FormSchema } from "@/pages/create";
+import { z } from "zod";
+// import { toast } from "@/components/ui/use-toast";
 
 
 interface RecordI{
@@ -37,13 +40,8 @@ export const useRecords = ()=>{
    
   
       ids.forEach(async (id:string) => {
-        const records = await readContract(config,{
-          abi: projectAbi,
-          functionName: 'records',
-          address: CONTRACT_ADDRESS,
-          args:[id]
-        }) as ResI;   
-  
+      
+       const records = await  getRecordByid(id);
         setRecords((prev:RecordI[])=>{
           return [...prev,
             {
@@ -65,15 +63,27 @@ export const useRecords = ()=>{
      }
    }
 
+
+   const getRecordByid = async (id:string)=>{
+    const record = await readContract(config,{
+      abi: projectAbi,
+      functionName: 'records',
+      address: CONTRACT_ADDRESS,
+      args:[id]
+    }) as ResI; 
+    
+    return record
+   }
+
   useEffect(()=>{
     getRecords()
   },[])
   
 
- 
   return {
     records,
-    loading
+    loading,
+    getRecordByid
   }
 
  
@@ -92,27 +102,48 @@ export const useRecordsCount = ()=>{
     return {
       data,
       isLoading,
-      isError
+      isError,
+      
     }
 }
 
 export const useCreateRecord = ()=>{
-  const { data: hash, writeContract,isPending } = useWriteContract()
+  const { data: hash, isPending,isSuccess,isError,writeContract } = useWriteContract()
 
 
-  const submit = ()=>{
-    writeContract({
-      abi: projectAbi,
-      functionName: 'createRecord',
-      address: CONTRACT_ADDRESS,
-      args: ["Olarinwaju Tona","Malaria","28/08/1999","Male"],
-    })
-
-    alert('Record Addeds');
+  const create = async  (data:z.infer<typeof FormSchema>)=>{
+     try {
+    await  writeContract({
+        abi: projectAbi,
+        functionName: 'createRecord',
+        address: CONTRACT_ADDRESS,
+        args: [data.patient_name,data.diagnosis,data.dob,data.gender],
+      })
+      
+     } catch (error) {
+      console.log(error)
+     }
   }
+     const update = async  (data:z.infer<typeof FormSchema>,id?:string)=>{
+      try {
+       await  writeContract({
+         abi: projectAbi,
+         functionName: 'updateRecord',
+         address: CONTRACT_ADDRESS,
+         args: [id,data.diagnosis,data.dob,data.gender],
+       });
+    
+      } catch (error) {
+       console.log(error)
+      }
+    }
+ 
+
+
     return {
-      submit,
+      create,update,
       hash,
-      isPending
+      isPending,
+      isSuccess,isError 
     }
 }
