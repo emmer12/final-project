@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button"
+import { Link } from "react-router-dom"
 // import { useCreateRecord, useRecords } from "@/hooks/use-contract"
 // import { useAccount, useConnect, useDisconnect } from "wagmi"
 
@@ -20,8 +21,11 @@ function Home() {
         <p>Our healthcare admin portal provides a seamless way to store, update, and view patient records securely.</p>
         <br /><br />
         <div className="flex gap-2 justify-center align-center" >
-          <Button variant={'default'} size={'lg'}>Get Started</Button>
+          <Link to="/records/create">
+          <Button variant={'default'} size={'lg'}>Get Started</Button></Link>
+          <Link to="/records">
           <Button variant={'outline'} size={'lg'}>View Records</Button>
+          </Link>
         </div>
     </div>
       <div className="p-3">

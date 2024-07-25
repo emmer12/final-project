@@ -24,6 +24,8 @@ import { toast } from "@/components/ui/use-toast"
 import { useCreateRecord, useRecords } from "@/hooks/use-contract"
 import { useNavigate, useParams } from "react-router"
 import { useEffect } from "react"
+import { useAccount, useConnect } from "wagmi"
+import { injected } from "wagmi/connectors"
 // import { useNavigate } from "react-router"
 
 export const FormSchema = z.object({
@@ -46,7 +48,8 @@ export const  Create = () =>    {
     const {getRecordByid}= useRecords();
     const params = useParams();
    const navigate = useNavigate();
-    
+   const { address } = useAccount()
+    const {connect} = useConnect();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -189,12 +192,18 @@ export const  Create = () =>    {
             </FormItem>
           )}
         />
-       <div className="text-center">
        {
-          params.id ? <Button disabled={isPending} type="submit" size={'lg'}  >Update</Button> : <Button disabled={isPending} type="submit" size={'lg'}  >Create</Button>
-        }
-       
+        address ? <div className="text-center">
+        {
+           params.id ? <Button disabled={isPending} type="submit" size={'lg'}  >Update</Button> : <Button disabled={isPending} type="submit" size={'lg'}  >Create</Button>
+         }
+        </div>
+        :
+        <div className="text-center">
+          <Button  onClick={() => connect({ connector: injected() })}>Connect wallet</Button>
        </div>
+       }
+       
       </form>
     </Form>
 
