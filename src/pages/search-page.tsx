@@ -16,7 +16,7 @@ import moment from 'moment';
 import { Input } from "@/components/ui/input"
 import { toast } from "@/components/ui/use-toast"
 import { RecordI, useCreateRecord, useRecords } from "@/hooks/use-contract"
-import { useNavigate, useParams } from "react-router"
+import { useNavigate } from "react-router"
 
 import { useAccount, useConnect } from "wagmi"
 import { injected } from "wagmi/connectors"
@@ -28,7 +28,7 @@ export const FormSchema = z.object({
 })
 
 export const  SearchPage = () =>    {
-    const {isPending,isSuccess,isError } = useCreateRecord();
+    const {isPending,isError } = useCreateRecord();
     const {getRecordByid}= useRecords();
    const navigate = useNavigate();
    const { address } = useAccount()
