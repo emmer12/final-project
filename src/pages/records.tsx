@@ -31,6 +31,7 @@ export function Records() {
       <TableHeader>
         <TableRow>
           <TableHead className="w-[50px]">S/N</TableHead>
+          <TableHead>Record Id</TableHead>
           <TableHead>Patient Name</TableHead>
           <TableHead>Diagnosis</TableHead>
           <TableHead>Gender</TableHead>
@@ -44,6 +45,7 @@ export function Records() {
           <TableRow key={record.recordId}>
             <TableCell className="font-medium">{i + 1}</TableCell>
             <TableCell className="font-medium">{record.patientName}</TableCell>
+            <TableCell className="font-medium">{record.recordId}</TableCell>
             <TableCell>{record.diagnosis}</TableCell>
             <TableCell>{record.patientGender}</TableCell>
             <TableCell>{record.patientDOB}</TableCell>
