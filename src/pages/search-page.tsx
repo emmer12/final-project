@@ -18,8 +18,6 @@ import { toast } from "@/components/ui/use-toast"
 import { RecordI, useCreateRecord, useRecords } from "@/hooks/use-contract"
 import { useNavigate } from "react-router"
 
-import { useAccount, useConnect } from "wagmi"
-import { injected } from "wagmi/connectors"
 import { useState } from "react"
 // import { useNavigate } from "react-router"
 
@@ -31,10 +29,8 @@ export const  SearchPage = () =>    {
     const {isPending,isError } = useCreateRecord();
     const {getRecordByid}= useRecords();
    const navigate = useNavigate();
-   const { address } = useAccount()
    const [record,setRecord] = useState<RecordI>()
    const [error,setError] = useState('')
-    const {connect} = useConnect();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -104,17 +100,8 @@ export const  SearchPage = () =>    {
           )}
         />
 
-{
-        address ? <div className="">
-        {
-           <Button disabled={isPending} type="submit" size={'lg'}  >Search</Button>
-         }
-        </div>
-        :
-        <div className="">
-          <Button  type="button" onClick={() => connect({ connector: injected() })}>Connect wallet</Button>
-       </div>
-       }
+<Button disabled={isPending} type="submit" size={'lg'}  >Search</Button>
+
       </form>
     </Form>
 
