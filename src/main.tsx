@@ -10,6 +10,7 @@ import Home from './pages/home.tsx'
 import Layout from './pages/layout/index.tsx'
 import {Records} from './pages/records.tsx'
 import { Create } from './pages/create.tsx'
+import { SearchPage } from './pages/search-page.tsx'
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/records/edit/:id",
         element: <Create />,
+      },
+      {
+        path: "/records/search",
+        element: <SearchPage />,
       },
     ],
   },

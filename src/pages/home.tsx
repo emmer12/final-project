@@ -21,10 +21,10 @@ function Home() {
         <p>Our healthcare admin portal provides a seamless way to store, update, and view patient records securely.</p>
         <br /><br />
         <div className="flex gap-2 justify-center align-center" >
-          <Link to="/records/create">
-          <Button variant={'default'} size={'lg'}>Get Started</Button></Link>
           <Link to="/records">
-          <Button variant={'outline'} size={'lg'}>View Records</Button>
+          <Button variant={'default'} size={'lg'}>Doctor</Button></Link>
+          <Link to="/records/search">
+          <Button variant={'outline'} size={'lg'}>Patient</Button>
           </Link>
         </div>
     </div>

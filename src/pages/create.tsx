@@ -200,7 +200,7 @@ export const  Create = () =>    {
         </div>
         :
         <div className="text-center">
-          <Button  onClick={() => connect({ connector: injected() })}>Connect wallet</Button>
+          <Button  type="button" onClick={() => connect({ connector: injected() })}>Connect wallet</Button>
        </div>
        }
        

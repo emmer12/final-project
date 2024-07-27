@@ -1,4 +1,5 @@
-import { EditIcon } from "@/components/icons"
+import { EditIcon, PlusIcon } from "@/components/icons"
+import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
@@ -10,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useRecords } from "@/hooks/use-contract"
+import moment from "moment"
 import { Link } from "react-router-dom"
 
 export function Records() {
@@ -19,8 +21,10 @@ export function Records() {
   
   return (
      <div className="mt-[50px]">
-      <header className="mb-4">
+      <header className="mb-4 flex justify-between">
         <h1 className="text-2xl font-semibold">Patients  Records </h1>
+
+        <Link  to={'/records/create'} >  <Button className="text-sm font-semibold  flex gap-2 items-center">Add Record <PlusIcon /></Button></Link> 
       </header>
       <Table>
       <TableCaption>A list of patients records.</TableCaption>
@@ -31,6 +35,7 @@ export function Records() {
           <TableHead>Diagnosis</TableHead>
           <TableHead>Gender</TableHead>
           <TableHead>DOB</TableHead>
+          <TableHead>Created At</TableHead>
           <TableHead className="text-right">Action</TableHead>
         </TableRow>
       </TableHeader>
@@ -42,6 +47,7 @@ export function Records() {
             <TableCell>{record.diagnosis}</TableCell>
             <TableCell>{record.patientGender}</TableCell>
             <TableCell>{record.patientDOB}</TableCell>
+            <TableCell>{moment(record.createdAt).format('DD MMM, YYYY, hh:mm A')}</TableCell>
             <TableCell className="text-right">
               <Link className="flex justify-end" to={`/records/edit/${record.recordId}`}>
                 <EditIcon />

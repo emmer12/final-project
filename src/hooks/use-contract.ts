@@ -9,14 +9,14 @@ import { z } from "zod";
 // import { toast } from "@/components/ui/use-toast";
 
 
-interface RecordI{
+export interface RecordI{
   recordId:string;
   patientName: string;
   diagnosis:string;
   patientDOB:string;
   patientGender:string;
-  createdBy:string;
-  createdAt:number
+  createdBy?:string;
+  createdAt?:number
 }
 
 interface ResI {
@@ -51,7 +51,7 @@ export const useRecords = ()=>{
               patientDOB:records[3],
               patientGender:records[4],
               createdBy:records[5],
-              createdAt:records[6] as unknown as number,
+              createdAt:parseInt(records[6].toString()) * 1000,
             }
           ]
         })
@@ -65,6 +65,7 @@ export const useRecords = ()=>{
 
 
    const getRecordByid = async (id:string)=>{
+    console.log("Got Here")
     const record = await readContract(config,{
       abi: projectAbi,
       functionName: 'records',

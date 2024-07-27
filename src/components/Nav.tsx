@@ -2,7 +2,6 @@ import { Link } from "react-router-dom"
 import { useAccount, useConnect } from "wagmi"
 import { Button } from "./ui/button"
 import { injected } from "wagmi/connectors"
-import { PlusIcon } from "lucide-react"
 import Blockies from 'react-blockies';
 
 function Nav() {
@@ -20,8 +19,8 @@ function Nav() {
        {
         address ?<nav>
         <ul className="flex items-center">
-             <li><Link className="text-sm font-semibold px-4" to={'records/'} >Records</Link></li>
-             <Link  to={'records/create'} >  <Button className="text-sm font-semibold  flex gap-2 items-center">Add Record <PlusIcon /></Button></Link>
+             {/* <li><Link className="text-sm font-semibold px-4" to={'records/'} >Records</Link></li> */}
+             {/* <Link  to={'records/create'} >  <Button className="text-sm font-semibold  flex gap-2 items-center">Add Record <PlusIcon /></Button></Link> */}
 
              <div className="bg-red-200 rounded-full overflow-hidden ml-4">
              <Blockies
