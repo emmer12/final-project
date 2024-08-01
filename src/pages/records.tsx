@@ -36,6 +36,8 @@ export function Records() {
           <TableHead>Diagnosis</TableHead>
           <TableHead>Gender</TableHead>
           <TableHead>DOB</TableHead>
+          <TableHead>Created By</TableHead>
+          <TableHead>Views count</TableHead>
           <TableHead>Created At</TableHead>
           <TableHead className="text-right">Action</TableHead>
         </TableRow>
@@ -49,6 +51,8 @@ export function Records() {
             <TableCell>{record.diagnosis}</TableCell>
             <TableCell>{record.patientGender}</TableCell>
             <TableCell>{record.patientDOB}</TableCell>
+            <TableCell>{record.createdBy}</TableCell>
+            <TableCell>{record.viewsCount}</TableCell>
             <TableCell>{moment(record.createdAt).format('DD MMM, YYYY, hh:mm A')}</TableCell>
             <TableCell className="text-right">
               <Link className="flex justify-end" to={`/records/edit/${record.recordId}`}>

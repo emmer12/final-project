@@ -16,7 +16,8 @@ export interface RecordI{
   patientDOB:string;
   patientGender:string;
   createdBy?:string;
-  createdAt?:number
+  createdAt?:number;
+  viewsCount?:number;
 }
 
 interface ResI {
@@ -51,6 +52,7 @@ export const useRecords = ()=>{
               patientDOB:records[3],
               patientGender:records[4],
               createdBy:records[5],
+              viewsCount:parseInt(records[8]),
               createdAt:parseInt(records[6].toString()) * 1000,
             }
           ]
