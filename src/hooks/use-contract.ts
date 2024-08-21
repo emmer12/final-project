@@ -67,7 +67,7 @@ export const useRecords = ()=>{
 
 
    const getRecordByid = async (id:string)=>{
-    console.log("Got Here")
+    
     const record = await readContract(config,{
       abi: projectAbi,
       functionName: 'records',
@@ -75,12 +75,16 @@ export const useRecords = ()=>{
       args:[id]
     }) as ResI; 
     
+    
     return record
    }
 
   useEffect(()=>{
     getRecords()
   },[])
+
+
+
   
 
   return {
@@ -140,6 +144,21 @@ export const useCreateRecord = ()=>{
        console.log(error)
       }
     }
+
+
+    const signRecord = async  (id:string)=>{
+      try {
+       await  writeContract({
+         abi: projectAbi,
+         functionName: 'getRecord',
+         address: CONTRACT_ADDRESS,
+         args: [id],
+       });
+    
+      } catch (error) {
+       console.log(error)
+      }
+    }
  
 
 
@@ -147,6 +166,7 @@ export const useCreateRecord = ()=>{
       create,update,
       hash,
       isPending,
-      isSuccess,isError 
+      isSuccess,isError ,
+      signRecord
     }
 }

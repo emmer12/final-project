@@ -26,7 +26,7 @@ export const FormSchema = z.object({
 })
 
 export const  SearchPage = () =>    {
-    const {isPending,isError } = useCreateRecord();
+    const {isPending,isError,signRecord } = useCreateRecord();
     const {getRecordByid}= useRecords();
    const navigate = useNavigate();
    const [record,setRecord] = useState<RecordI>()
@@ -46,7 +46,8 @@ export const  SearchPage = () =>    {
         pathname: '/records/search',
         search: `?s=${data.query}`,
       });
-   const record = await getRecordByid(data.query);
+      await  signRecord(data.query); 
+       const record = await getRecordByid(data.query);
 
         if(record[0] == "0x00000000000000"){
             setError('Record not found')
@@ -76,8 +77,6 @@ export const  SearchPage = () =>    {
   }
 
  
-  
-
 
   return (
       <section className="sm:max-w-[512px] w-full bg-white rounded-[18px] m-auto mt-[100px] p-6">
@@ -108,12 +107,12 @@ export const  SearchPage = () =>    {
    {
     record ?
     <div className="mt-4">
-        <div className="flex justify-between my-3">Record Id :<span className="font-semibold"> {record.recordId}</span></div>
-        <div className="flex justify-between my-3"> Name :<span className="font-semibold"> {record.patientName}</span></div>
-        <div className="flex justify-between my-3"> Date of Birth :<span className="font-semibold"> {record.patientDOB}</span></div>
-        <div className="flex justify-between my-3">Gendar :<span className="font-semibold"> {record.patientGender}</span></div>
-        <div className="flex justify-between my-3">Diagnosis :<span className="font-semibold"> {record.diagnosis}</span></div>
-        <div className="flex justify-between my-3">Date Created :<span className="font-semibold"> {moment(record.createdAt).format('DD MMM, YYYY, hh:mm A')} </span></div>
+        <div className="flex gap-4 justify-between my-3">Record Id :<span className="font-semibold"> {record.recordId}</span></div>
+        <div className="flex gap-4 justify-between my-3"> Name :<span className="font-semibold"> {record.patientName}</span></div>
+        <div className="flex gap-4 justify-between my-3"> Date of Birth :<span className="font-semibold"> {record.patientDOB}</span></div>
+        <div className="flex gap-4 justify-between my-3">Gender :<span className="font-semibold"> {record.patientGender}</span></div>
+        <div className="flex gap-4 justify-between my-3">Diagnosis :<span className="font-semibold max-w-[300px] text-end"> {record.diagnosis}</span></div>
+        <div className="flex gap-4 justify-between my-3">Date Created :<span className="font-semibold"> {moment(record.createdAt).format('DD MMM, YYYY, hh:mm A')} </span></div>
     </div> : 
     <div>
         
