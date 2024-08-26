@@ -14,7 +14,7 @@ function Nav() {
         <div className="container h-full ">
           <div className="flex  items-center justify-between h-full">
           <Link to={'/'}>
-            <h4 className="text-3xl font-bold">Project Dia</h4>
+            <h4 className="text-3xl font-bold">EHR System</h4>
           </Link>
        {
         address ?<nav>
