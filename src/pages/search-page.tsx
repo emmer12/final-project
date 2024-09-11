@@ -19,6 +19,8 @@ import { RecordI, useCreateRecord, useRecords } from "@/hooks/use-contract";
 import { useNavigate } from "react-router";
 
 import { useState } from "react";
+import { EditIcon } from "@/components/icons";
+import { Link } from "react-router-dom";
 // import { useNavigate } from "react-router"
 
 export const FormSchema = z.object({
@@ -150,6 +152,16 @@ export const SearchPage = () => {
               {" "}
               {moment(record.createdAt).format("DD MMM, YYYY, hh:mm A")}{" "}
             </span>
+          </div>
+          <div className="text-end">
+            <Link
+              className="flex justify-end"
+              to={`/records/edit/${record.recordId}`}
+            >
+              <Button variant={"secondary"}>
+                <span className="mr-3"> Edit Record </span> <EditIcon />
+              </Button>
+            </Link>
           </div>
         </div>
       ) : (
