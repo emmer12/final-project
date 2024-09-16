@@ -1,5 +1,6 @@
 import { EditIcon, PlusIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -12,6 +13,7 @@ import {
 } from "@/components/ui/table";
 import { useRecords } from "@/hooks/use-contract";
 import moment from "moment";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAccount, useConnect } from "wagmi";
 import { injected } from "wagmi/connectors";
@@ -21,6 +23,30 @@ export function Records() {
   const { connect } = useConnect();
 
   const { records } = useRecords();
+  const [filteredRecord, setFilteredRecord] = useState(records || []);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const filterItems = (term: string) => {
+    return records.filter((item) => {
+      console.log(item);
+      const records =
+        item?.recordId.toLowerCase().includes(term.toLowerCase()) ||
+        item?.patientName.toLowerCase().includes(term.toLowerCase());
+
+      return records;
+    });
+  };
+
+  useEffect(() => {
+    if (filteredRecord.length == 0) {
+      setFilteredRecord(records);
+    }
+  }, [records]);
+
+  // Update the filtered items whenever the search term changes
+  useEffect(() => {
+    setFilteredRecord(filterItems(searchTerm));
+  }, [searchTerm]);
 
   return (
     <div className="mt-[50px]">
@@ -28,12 +54,23 @@ export function Records() {
         <h1 className="text-2xl font-semibold">Patients Records </h1>
 
         {address && (
-          <Link to={"/records/create"}>
-            {" "}
-            <Button className="text-sm font-semibold  flex gap-2 items-center">
-              Add Record <PlusIcon />
-            </Button>
-          </Link>
+          <div className="flex gap-3 items-center">
+            <div className="flex">
+              <Input
+                onChange={(e) => setSearchTerm(e.target.value)}
+                value={searchTerm}
+                className="h-[45px] min-w-full w-[300px]"
+                placeholder="Search patient"
+                type="search"
+              />
+            </div>
+            <Link to={"/records/create"}>
+              {" "}
+              <Button className="text-sm font-semibold  flex gap-2 items-center">
+                Add Record <PlusIcon />
+              </Button>
+            </Link>
+          </div>
         )}
       </header>
 
@@ -55,7 +92,7 @@ export function Records() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {records.reverse().map((record, i) => (
+            {filteredRecord.reverse().map((record, i) => (
               <TableRow key={record.recordId}>
                 <TableCell className="font-medium">{i + 1}</TableCell>
                 <TableCell className="font-medium">{record.recordId}</TableCell>
