@@ -28,7 +28,7 @@ export const FormSchema = z.object({
 });
 
 export const SearchPage = () => {
-  const { isPending, isError, signRecord, status } = useCreateRecord();
+  const { isPending, isError } = useCreateRecord();
   const { getRecordByid } = useRecords();
   const navigate = useNavigate();
   const [record, setRecord] = useState<RecordI>();
@@ -49,7 +49,7 @@ export const SearchPage = () => {
         pathname: "/records/search",
         search: `?s=${data.query}`,
       });
-      await signRecord(data.query);
+      getRecord();
 
       setData(data);
     } catch (e) {
@@ -82,10 +82,6 @@ export const SearchPage = () => {
       });
     }
   };
-
-  if (status == "success") {
-    getRecord();
-  }
 
   return (
     <section className="sm:max-w-[512px] w-full bg-white rounded-[18px] m-auto mt-[100px] p-6">

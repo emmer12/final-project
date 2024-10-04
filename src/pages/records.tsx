@@ -11,7 +11,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useRecords } from "@/hooks/use-contract";
+import { useCreateRecord, useRecords } from "@/hooks/use-contract";
+import { Search } from "lucide-react";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
@@ -21,14 +22,13 @@ import { injected } from "wagmi/connectors";
 export function Records() {
   const { address } = useAccount();
   const { connect } = useConnect();
-
+  const { signRecord, status } = useCreateRecord();
   const { records } = useRecords();
   const [filteredRecord, setFilteredRecord] = useState(records || []);
   const [searchTerm, setSearchTerm] = useState("");
 
   const filterItems = (term: string) => {
     return records.filter((item) => {
-      console.log(item);
       const records =
         item?.recordId.toLowerCase().includes(term.toLowerCase()) ||
         item?.patientName.toLowerCase().includes(term.toLowerCase());
@@ -43,10 +43,19 @@ export function Records() {
     }
   }, [records]);
 
-  // Update the filtered items whenever the search term changes
+  const sign = async () => {
+    await signRecord(searchTerm);
+  };
+
+  const applyFilter = () => {
+    sign();
+  };
+
   useEffect(() => {
-    setFilteredRecord(filterItems(searchTerm));
-  }, [searchTerm]);
+    if (status == "success") {
+      setFilteredRecord(filterItems(searchTerm));
+    }
+  }, [status]);
 
   return (
     <div className="mt-[50px]">
@@ -55,14 +64,20 @@ export function Records() {
 
         {address && (
           <div className="flex gap-3 items-center">
-            <div className="flex">
+            <div className="flex items-center gap-2">
               <Input
                 onChange={(e) => setSearchTerm(e.target.value)}
                 value={searchTerm}
-                className="h-[45px] min-w-full w-[300px]"
+                className="h-[45px] max-w-full w-[300px]"
                 placeholder="Search patient"
                 type="search"
               />
+              <Button
+                onClick={() => applyFilter()}
+                className="text-sm h-[45px] font-semibold  inline-block gap-2 items-center"
+              >
+                <Search />
+              </Button>
             </div>
             <Link to={"/records/create"}>
               {" "}
